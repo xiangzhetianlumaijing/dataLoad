@@ -1,4 +1,4 @@
-package main
+package GetHostInfo
 
 import (
 	"fmt"
@@ -75,7 +75,7 @@ type port_info_type struct {
 	Name    string `json:"name" label:"名称"`
 }
 
-type host_info_type struct {
+type Host_info_type struct {
 	HostName string           `json:"hostname" label:"主机名"`
 	OsInfo   os_info_type     `json:"os_info" label:"系统信息"`
 	CpuInfo  cpu_info_type    `json:"cpu_info" label:"CPU信息"`
@@ -86,7 +86,7 @@ type host_info_type struct {
 	PortInfo []port_info_type `json:"port_info" label:"端口信息"`
 }
 
-func get_os_info(host_info *host_info_type) {
+func get_os_info(host_info *Host_info_type) {
 	// 是否可联网
 	_, err := osnet.DialTimeout("tcp", "114.114.114.114:53", 2*time.Second)
 	if err != nil {
@@ -208,7 +208,7 @@ func get_os_info(host_info *host_info_type) {
 	host_info.OsInfo.PhysicalMachine = physical_machine
 }
 
-func get_user_info(host_info *host_info_type) {
+func get_user_info(host_info *Host_info_type) {
 	user_info, err := host.Users()
 	if err != nil {
 		fmt.Printf("Error: user info get error: %s\n", err)
@@ -228,7 +228,7 @@ func get_user_info(host_info *host_info_type) {
 	}
 }
 
-func get_cpu_info(host_info *host_info_type) {
+func get_cpu_info(host_info *Host_info_type) {
 	cpu_info, err := cpu.Info()
 	if err != nil {
 		fmt.Printf("Error: cpu info get error: %s\n", err)
@@ -247,7 +247,7 @@ func get_cpu_info(host_info *host_info_type) {
 	host_info.CpuInfo.CpuArch = cpu_arch
 }
 
-func get_mem_info(host_info *host_info_type) {
+func get_mem_info(host_info *Host_info_type) {
 	mem_info, err := mem.VirtualMemory()
 	if err != nil {
 		fmt.Printf("Error: mem info get error: %s\n", err)
@@ -267,7 +267,7 @@ func get_mem_info(host_info *host_info_type) {
 	}
 }
 
-func get_disk_info(host_info *host_info_type) {
+func get_disk_info(host_info *Host_info_type) {
 	partition_info, err := disk.Partitions(false)
 	if err != nil {
 		fmt.Printf("Error: disk partition info get error: %s\n", err)
@@ -316,7 +316,7 @@ func get_disk_info(host_info *host_info_type) {
 	}
 }
 
-func get_net_info(host_info *host_info_type) {
+func get_net_info(host_info *Host_info_type) {
 	net_info, err := net.Interfaces()
 	if err != nil {
 		fmt.Printf("Error: net info get error: %s\n", err)
@@ -333,7 +333,7 @@ func get_net_info(host_info *host_info_type) {
 	}
 }
 
-func get_port_info(host_info *host_info_type) {
+func get_port_info(host_info *Host_info_type) {
 	ports_info, err := net.Connections("inet")
 	if err != nil {
 		fmt.Printf("Error: port info get error: %s\n", err)
@@ -385,7 +385,7 @@ func get_label(s interface{}, field_name string) string {
 	return tag_name
 }
 
-func format_print(host_info host_info_type) {
+func format_print(host_info Host_info_type) {
 	os_info := host_info.OsInfo
 	cpu_info := host_info.CpuInfo
 	mem_info := host_info.MemInfo
@@ -465,9 +465,23 @@ func format_print(host_info host_info_type) {
 	fmt.Printf("%s", output)
 }
 
+func Get_host_info() Host_info_type {
+	fmt.Println("获取主机信息中, 请稍后...")
+	host_info := Host_info_type{}
+
+	get_os_info(&host_info)
+	get_cpu_info(&host_info)
+	get_user_info(&host_info)
+	get_mem_info(&host_info)
+	get_disk_info(&host_info)
+	get_net_info(&host_info)
+	get_port_info(&host_info)
+	return host_info
+}
+
 func main() {
 	fmt.Println("获取主机信息中, 请稍后...")
-	host_info := host_info_type{}
+	host_info := Host_info_type{}
 
 	get_os_info(&host_info)
 	get_cpu_info(&host_info)

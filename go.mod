@@ -8,12 +8,10 @@ require (
 )
 
 require (
-	github.com/Bowery/prompt v0.0.0-20190916142128-fa8279994f75 // indirect
-	github.com/dchest/safefile v0.0.0-20151022103144-855e8d98f185 // indirect
-	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
-	github.com/kardianos/govendor v1.0.9 // indirect
+	github.com/StackExchange/wmi v0.0.0-20190523213315-cbe66965904d // indirect
+	github.com/go-ole/go-ole v1.2.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	golang.org/x/sys v0.0.0-20220704084225-05e143d24a9e // indirect
-	golang.org/x/tools v0.1.11 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
+
+require github.com/mailru/easyjson v0.0.0-20190312143242-1de009706dbe // indirect
